@@ -1,8 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useReducer, useState } from "react";
-import { Link } from "react-router-dom";
+import { Col, Row } from "react-bootstrap";
+import { Helmet } from "react-helmet-async";
+// import { Link } from "react-router-dom";
 import logger from "use-reducer-logger";
-import data from "../data";
+import Product from "../components/Product";
+// import data from "../data";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -37,6 +40,9 @@ const HomeScreen = () => {
   }, []);
   return (
     <div>
+      <Helmet>
+        <title>Business</title>
+      </Helmet>
       <h1>Featured Products</h1>
       <div className="products">
         {loading ? (
@@ -44,17 +50,13 @@ const HomeScreen = () => {
         ) : error ? (
           <div>{error}</div>
         ) : (
-          products.map((product) => (
-            <div className="product" key={product.slug}>
-              <Link to={`/product/${product.slug}`}>
-                <img src={product.image} alt={product.name} />
-              </Link>
-              {/* <p>
-                <strong>${product.price}</strong>
-              </p>
-              <button>Add to cart</button> */}
-            </div>
-          ))
+          <Row>
+            {products.map((product) => (
+              <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
+                <Product product={product}></Product>
+              </Col>
+            ))}
+          </Row>
         )}
       </div>
     </div>
