@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import MessageBox from "../components/MessageBox";
 import Store from "../Store";
 
+const config = require("../config.json");
+
 const CartScreen = () => {
   const navigate = useNavigate();
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -14,7 +16,7 @@ const CartScreen = () => {
   } = state;
 
   const updateCartHandler = async (item, quantity) => {
-    const { data } = await axios.get(`/api/products/${item._id}`);
+    const { data } = await axios.get(`${config.HOST}/api/products/${item._id}`);
     if (data.countInStock < quantity) {
       window.alert("Sorry. Product is out of stock");
       return;

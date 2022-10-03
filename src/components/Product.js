@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import Store from "../Store";
 import Rating from "./Rating";
 
+const config = require("../config.json");
+
 function Product(props) {
   const { product } = props;
 
@@ -16,7 +18,7 @@ function Product(props) {
   const addToCartHandler = async (item) => {
     const existItem = cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    const { data } = await axios.get(`/api/products/${item._id}`);
+    const { data } = await axios.get(`${config.HOST}/api/products/${item._id}`);
     if (data.countInStock < quantity) {
       window.alert("Sorry. Product is out of stock");
       return;
